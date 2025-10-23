@@ -39,3 +39,11 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# EAS
+.easignore
+eas-build-*.log
+
+# Environment variables (keep .env.example)
+.env
+!.env.example

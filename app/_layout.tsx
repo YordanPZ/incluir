@@ -9,13 +9,13 @@ import DevModeFloatingButton from '../components/DevModeFloatingButton';
 import "../global.css"
 
 export default function RootLayout() {
-    const colorScheme = useColorScheme();
-    const theme = colorScheme === 'dark' ? NAV_THEME.dark : NAV_THEME.light;
+    // Forzar tema claro para evitar problemas de UI
+    const theme = NAV_THEME.light;
 
     return (
         <DevModeProvider>
             <ThemeProvider value={theme}>
-                <StatusBar barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'} />
+                <StatusBar barStyle="dark-content" />
                 <View style={{ flex: 1 }}>
                     <Stack screenOptions={{ headerShown: false }}>
                         <Stack.Screen name="index" />
