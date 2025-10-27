@@ -208,19 +208,28 @@ class PrestacionService {
       }
 
       // Obtener rango de fechas del día (para testing usa 2024-10-22)
-      const { inicio: inicioDelDia, fin: finDelDia } = this.obtenerRangoFechaDelDia();
+      // const { inicio: inicioDelDia, fin: finDelDia } = this.obtenerRangoFechaDelDia();
 
-      console.log('[] prestaciones - Filtros de fecha (Argentina timezone):');
-      console.log('Inicio:', inicioDelDia.toISOString(), '- Local:', moment(inicioDelDia).tz(this.TIMEZONE).format('YYYY-MM-DD HH:mm:ss'));
-      console.log('Fin:', finDelDia.toISOString(), '- Local:', moment(finDelDia).tz(this.TIMEZONE).format('YYYY-MM-DD HH:mm:ss'));
+// Definí la zona horaria de Argentina
+const TIMEZONE = 'America/Argentina/Buenos_Aires';
 
-      // Query usando RPC para obtener coordenadas extraídas
-      const { data: prestaciones, error } = await supabase.rpc('obtener_prestaciones_con_coordenadas', {
-        p_user_id: currentUserId,
-        p_fecha_inicio: inicioDelDia.toISOString(),
-        p_fecha_fin: finDelDia.toISOString()
-      });
+// Obtené la fecha actual en esa zona
+const ahora = moment.tz(TIMEZONE);
 
+// Calculá el inicio y fin del día
+const inicioDelDia = ahora.clone().startOf('day');
+const finDelDia = ahora.clone().endOf('day');
+
+console.log('[] prestaciones - Filtros de fecha (Argentina timezone):');
+console.log('Inicio:', inicioDelDia.toISOString(), '- Local:', inicioDelDia.format('YYYY-MM-DD HH:mm:ss'));
+console.log('Fin:', finDelDia.toISOString(), '- Local:', finDelDia.format('YYYY-MM-DD HH:mm:ss'));
+
+// Query usando RPC para obtener coordenadas extraídas
+const { data: prestaciones, error } = await supabase.rpc('obtener_prestaciones_con_coordenadas', {
+  p_user_id: currentUserId,
+  p_fecha_inicio: inicioDelDia.toISOString(),
+  p_fecha_fin: finDelDia.toISOString()
+});
       if (error) {
         console.log(error);
         throw error;

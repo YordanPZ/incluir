@@ -6,7 +6,7 @@ import { Session } from '@supabase/supabase-js';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Text } from '../components/ui/text';
-import { 
+import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogContent,
@@ -21,7 +21,7 @@ export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    
+
     // Estados para modales
     const [errorModalOpen, setErrorModalOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -63,7 +63,7 @@ export default function LoginPage() {
 
     return (
         <>
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} className="bg-background">
             <View style={styles.content}>
                 {/* Header */}
                 <View style={styles.header}>
@@ -73,8 +73,8 @@ export default function LoginPage() {
                         onPress={() => router.back()}
                     >
                         <View style={styles.backButton}>
-                            <ArrowLeft size={16} color="#6b7280" />
-                            <Text style={styles.backText}>Volver</Text>
+                            <ArrowLeft size={16} className="text-muted-foreground" />
+                            <Text className="text-muted-foreground">Volver</Text>
                         </View>
                     </Button>
                     <Text variant="h3">Incluir</Text>
@@ -120,7 +120,7 @@ export default function LoginPage() {
                         onPress={signInWithEmail}
                         style={styles.loginButton}
                     >
-                        <Text>{loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}</Text>
+                        <Text>{loading ? 'Iniciando sesión...' : 'Acceder'}</Text>
                     </Button>
                 </View>
 
@@ -133,6 +133,13 @@ export default function LoginPage() {
                     >
                         <Text>Crear cuenta</Text>
                     </Button>
+                </View>
+
+                {/* Version Info */}
+                <View style={styles.versionInfo}>
+                    <Text variant="small" className="text-muted-foreground">
+                        v1.0.1
+                    </Text>
                 </View>
             </View>
         </ScrollView>
@@ -160,7 +167,6 @@ export default function LoginPage() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ffffff',
     },
     content: {
         paddingHorizontal: 24,
@@ -203,12 +209,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         gap: 8,
     },
+    versionInfo: {
+        alignItems: 'center',
+        paddingTop: 32,
+        paddingBottom: 24,
+    },
     backButton: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 4,
     },
     backText: {
-        color: '#6b7280',
     },
 });
